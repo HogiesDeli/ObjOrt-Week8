@@ -31,16 +31,13 @@ class BusinessLogic
                         break;
                     // Add A Course
                     case 2:
-                        DataTable tableCourse = database.AddCourse(user);
-                        if (tableCourse != null)
-                            appGUI.DisplayCourse(tableCourse);
+                        DataTable tableCourse = database.AddCourse(user, semester, courseID);
+                        if (tableCourse !=null)
+                            appGUI.AddCourse(tableCourse,tableEnrollment);
                         break;
                     // Drop A Course
                     case 3:
-                        DataTable tableCourse = database.DropCourse(user);
-                        if (tableCourse != null)
-                            appGUI.DisplayCourse(tableCourse);
-                        break;
+                        
                     // Log Out
                     case 4:
                         _continue = false;

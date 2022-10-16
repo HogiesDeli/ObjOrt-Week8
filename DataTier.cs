@@ -74,59 +74,51 @@ class DataTier
         }
     }
 
-    public DataTable AddCourse(User user)
+    public void AddCourse(User user, string semester, int courseID)
     {
         MySqlConnection conn = new MySqlConnection(connStr);
-
         try
         {
-            conn.Open();
+           conn.Open();
             string procedure = "AddCourse";
             MySqlCommand cmd = new MySqlCommand(procedure, conn);
             cmd.CommandType = CommandType.StoredProcedure;
-
-
-
-            MySqlDataReader rdr = cmd.ExecuteReader();
-            DataTable tableCourse = new DataTable();
-            tableCourse.Load(rdr);
-            rdr.Close();
-            conn.Close();
-            return tableCourse;
+            cmd.Parameters.AddWithValue("@inputStudentID", user.userID);
+            cmd.Parameters["@inputStudentID"].Direction = ParameterDirection.Input;
+            cmd.Parameters.AddWithValue("@inputCourseID", courseID);
+            cmd.Parameters["@inputCourseID"].Direction = ParameterDirection.Input;
+            cmd.Parameters.AddWithValue("@inputSemester", semester);
+            cmd.Parameters["@inputSemester"].Direction = ParameterDirection.Input;
+            cmd.ExecuteNonQuery();
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             conn.Close();
-            return null;
         }
     }
 
-    public DataTable DropCourse(User user)
-    {
+    public void DropCourse(User user, string semester, int courseID){
         MySqlConnection conn = new MySqlConnection(connStr);
-
+       
         try
-        {
+        {  
             conn.Open();
             string procedure = "DropCourse";
             MySqlCommand cmd = new MySqlCommand(procedure, conn);
             cmd.CommandType = CommandType.StoredProcedure;
-
-
-
-            MySqlDataReader rdr = cmd.ExecuteReader();
-            DataTable tableCourse = new DataTable();
-            tableCourse.Load(rdr);
-            rdr.Close();
-            conn.Close();
-            return tableCourse;
+            cmd.Parameters.AddWithValue("@inputStudentID", user.userID);
+            cmd.Parameters["@inputStudentID"].Direction = ParameterDirection.Input;
+            cmd.Parameters.AddWithValue("@inputCourseID", courseID);
+            cmd.Parameters["@inputCourseID"].Direction = ParameterDirection.Input;
+            cmd.Parameters.AddWithValue("@inputSemester", semester);
+            cmd.Parameters["@inputSemester"].Direction = ParameterDirection.Input;
+            cmd.ExecuteNonQuery();
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             conn.Close();
-            return null;
         }
     }
 
