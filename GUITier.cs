@@ -40,18 +40,12 @@ class GuiTier
 
     }
 
-    public void AddCourse(DataTable tableCourse, DataTable tableEnrollment){
+    public void ShowCourse(DataTable tableCourse)
+    {
         Console.WriteLine("---------------Course List-------------------");
-        foreach (DataRow row in tableCourse.Rows){
-            Console.WriteLine($"CourseID: {row["courseID"]} \t CourseName: {row["courseName"]}");
-        }
-        Console.WriteLine("Please input a CourseID");
-        int courseID = Convert.ToInt16(Console.ReadLine());
-        string semester = Console.ReadLine();
-        Console.WriteLine("---------------Enrollment List-------------------");
-        foreach (DataRow row in tableEnrollment.Rows)
+        foreach (DataRow row in tableCourse.Rows)
         {
-            Console.WriteLine($"CourseID: {row["courseID"]} \t CourseName: {row["courseName"]} \t Semester:{row["semester"]}");
+            Console.WriteLine($"CourseID: {row["courseID"]} \t CourseName: {row["courseName"]}");
         }
     }
 }

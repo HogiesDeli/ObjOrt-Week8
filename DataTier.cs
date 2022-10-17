@@ -74,12 +74,39 @@ class DataTier
         }
     }
 
-    public void AddCourse(User user, string semester, int courseID)
+    public DataTable ListCourse()
     {
         MySqlConnection conn = new MySqlConnection(connStr);
         try
         {
-           conn.Open();
+            conn.Open();
+            string procedure = "ListCourse";
+            MySqlCommand cmd = new MySqlCommand(procedure, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            
+
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            DataTable tableCourse = new DataTable();
+            tableCourse.Load(rdr);
+            rdr.Close();
+            conn.Close();
+            return tableCourse;
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            conn.Close();
+            return null;
+        }
+    }
+    public void AddCourse(User user, int courseID, string semester)
+    {
+        MySqlConnection conn = new MySqlConnection(connStr);
+        try
+        {
+            conn.Open();
             string procedure = "AddCourse";
             MySqlCommand cmd = new MySqlCommand(procedure, conn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -98,11 +125,12 @@ class DataTier
         }
     }
 
-    public void DropCourse(User user, string semester, int courseID){
+    public void DropCourse(User user, int courseID, string semester)
+    {
         MySqlConnection conn = new MySqlConnection(connStr);
-       
+
         try
-        {  
+        {
             conn.Open();
             string procedure = "DropCourse";
             MySqlCommand cmd = new MySqlCommand(procedure, conn);
